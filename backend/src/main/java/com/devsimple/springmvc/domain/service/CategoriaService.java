@@ -7,11 +7,19 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+import java.util.List;
+
 @AllArgsConstructor
+@Service
 public class CategoriaService {
 
     private CategoriaRepository categoriaRepository;
+
+    @Transactional
+    public Categoria buscar(Long categoriaId){
+        return categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new DomainException("Categoria não encontrada"));
+    }
 
     @Transactional
     public Categoria adicionar(Categoria categoria){
@@ -24,4 +32,8 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
+    @Transactional
+    public void remover(Long categoria){
+        categoriaRepository.deleteById(categoria);
+    }
 }

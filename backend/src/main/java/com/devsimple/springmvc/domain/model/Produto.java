@@ -6,24 +6,31 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity
-public class Categoria {
+public class Produto {
 
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     @NotBlank
     @Size(max = 60)
     private String nome;
 
-//    @ManyToMany(mappedBy = "categoria")
-//    private List<Produto> produto = new ArrayList<>();
+    private BigDecimal preco;
+//
+//    @ManyToMany
+//    @JoinTable(name = "produto_categoria",
+//    joinColumns = @JoinColumn(name = "produto_id"),
+//            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+//    private List<Categoria> categoria = new ArrayList<>();
+
 
 }
