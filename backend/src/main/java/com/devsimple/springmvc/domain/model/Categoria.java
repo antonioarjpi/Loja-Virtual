@@ -1,5 +1,6 @@
 package com.devsimple.springmvc.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Categoria {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @EqualsAndHashCode.Include
@@ -23,7 +25,8 @@ public class Categoria {
     @Size(max = 60)
     private String nome;
 
-//    @ManyToMany(mappedBy = "categoria")
-//    private List<Produto> produto = new ArrayList<>();
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "categoria")
+    private List<Produto> produto = new ArrayList<>();
 
 }

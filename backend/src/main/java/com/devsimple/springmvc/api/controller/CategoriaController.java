@@ -44,4 +44,7 @@ public class CategoriaController {
         categoriaService.remover(categoriaId);
         return ResponseEntity.noContent().build();
     }
+
+
+
 }
