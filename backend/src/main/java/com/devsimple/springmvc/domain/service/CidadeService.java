@@ -7,12 +7,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class CidadeService {
 
     private CidadeRepository cidadeRepository;
 
+    @Transactional
+    public List<Cidade> listar(){
+        return cidadeRepository.findAll();
+    }
 
     @Transactional
     public Cidade buscar(Long cidadeId){

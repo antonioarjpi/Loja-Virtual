@@ -20,8 +20,10 @@ public class CidadeController {
 
 
     @GetMapping
-    public List<Cidade> listar(){
-        return cidadeRepository.findAll();
+    public ResponseEntity<List<Cidade>> listar(){
+        List<Cidade> lista = cidadeService.listar();
+        return ResponseEntity.ok(lista);
+
     }
 
     @PostMapping
