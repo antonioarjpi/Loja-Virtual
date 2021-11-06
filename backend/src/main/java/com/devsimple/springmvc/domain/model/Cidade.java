@@ -1,5 +1,6 @@
 package com.devsimple.springmvc.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Cidade implements Serializable {
     private Long Id;
     private String nome;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private Estado estado;

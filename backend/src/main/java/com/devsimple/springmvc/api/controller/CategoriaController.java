@@ -26,9 +26,15 @@ public class CategoriaController {
     }
 
     @GetMapping("/{categoriaId}")
-    public Categoria buscarId(@PathVariable Long categoriaId){
-        return categoriaService.buscar(categoriaId);
+    public ResponseEntity<?> listar(@PathVariable Long categoriaId){
+        Categoria obj = categoriaService.buscar(categoriaId);
+        return ResponseEntity.ok().body(obj);
     }
+
+//    @GetMapping("/{categoriaId}")
+//    public Categoria buscarId(@PathVariable Long categoriaId){
+//        return categoriaService.buscar(categoriaId);
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
