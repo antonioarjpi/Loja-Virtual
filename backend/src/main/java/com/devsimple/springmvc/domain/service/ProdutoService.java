@@ -3,20 +3,19 @@ package com.devsimple.springmvc.domain.service;
 import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Categoria;
 import com.devsimple.springmvc.domain.model.Produto;
-import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import com.devsimple.springmvc.domain.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class ProdutoService {
 
+    @Autowired
     private ProdutoRepository produtoRepository;
-    private CategoriaRepository categoriaRepository;
 
     public Produto create(Produto produto) {
         try {
@@ -26,8 +25,6 @@ public class ProdutoService {
             return null;
         }
     }
-
-
 
     @Transactional
     public Produto buscar(Long produtoId){
@@ -48,7 +45,6 @@ public class ProdutoService {
         categoria.setNome(categoria.getNome());
         return produtoRepository.save(produto);
     }
-
 
     public void remover(Long produtoId) {
         produtoRepository.deleteById(produtoId);

@@ -7,6 +7,8 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -31,14 +33,9 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
-    public Pedido(){
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
 
-    }
 
-    public Pedido(Long id, Date instante, Pagamento pagamento, Cliente cliente, Endereco enderecoDeEntrega) {
-        this.id = id;
-        this.instante = instante;
-        this.cliente = cliente;
-        this.enderecoDeEntrega = enderecoDeEntrega;
-    }
+
 }

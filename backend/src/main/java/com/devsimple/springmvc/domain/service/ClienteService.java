@@ -1,11 +1,10 @@
 package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.domain.exception.DomainException;
-import com.devsimple.springmvc.domain.model.Categoria;
 import com.devsimple.springmvc.domain.model.Cliente;
-import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import com.devsimple.springmvc.domain.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class ClienteService {
 
+    @Autowired
     private ClienteRepository clienteRepository;
-    private CategoriaRepository categoriaRepository;
 
     public Cliente create(Cliente cliente) {
         try {

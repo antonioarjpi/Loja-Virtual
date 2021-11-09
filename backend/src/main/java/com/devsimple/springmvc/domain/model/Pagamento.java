@@ -17,6 +17,8 @@ public class Pagamento implements Serializable {
     @Id
     @EqualsAndHashCode.Include
     private Long id;
+
+    @Column(name = "estado")
     private EstadoPagamaneto estadoPagamaneto;
 
     @OneToOne
@@ -24,12 +26,4 @@ public class Pagamento implements Serializable {
     @MapsId
     private Pedido pedido;
 
-    public Pagamento() {
-    }
-
-    public Pagamento(Long id, EstadoPagamaneto estadoPagamaneto, Pedido pedido) {
-        this.id = id;
-        this.estadoPagamaneto = estadoPagamaneto;
-        this.pedido = pedido;
-    }
 }

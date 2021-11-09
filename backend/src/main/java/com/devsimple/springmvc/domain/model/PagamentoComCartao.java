@@ -4,9 +4,11 @@ import com.devsimple.springmvc.domain.enums.EstadoPagamaneto;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
 @Entity
+@Table(name = "pagamento_com_cartao")
 public class PagamentoComCartao extends Pagamento {
     private static final long serialVersionUID = 1L;
 
@@ -16,8 +18,4 @@ public class PagamentoComCartao extends Pagamento {
 
     }
 
-    public PagamentoComCartao(Long id, EstadoPagamaneto estadoPagamaneto, Pedido pedido, Integer numerosParcelas) {
-        super(id, estadoPagamaneto, pedido);
-        this.numerosParcelas = numerosParcelas;
-    }
 }

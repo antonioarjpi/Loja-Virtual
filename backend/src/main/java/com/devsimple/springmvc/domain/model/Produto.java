@@ -38,6 +38,15 @@ public class Produto implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categoria = new ArrayList<>();
 
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
 
+    public List<Pedido> getPedido(){
+        List<Pedido> lista = new ArrayList<>();
+        for (ItemPedido x : itens){
+            lista.add(x.getPedido());
+        }
+        return lista;
+    }
 }
 

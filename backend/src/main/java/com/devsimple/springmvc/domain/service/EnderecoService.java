@@ -4,6 +4,7 @@ import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Endereco;
 import com.devsimple.springmvc.domain.repository.EnderecoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class EnderecoService {
 
+    @Autowired
     private EnderecoRepository enderecoRepository;
 
     public Endereco create(Endereco endereco) {

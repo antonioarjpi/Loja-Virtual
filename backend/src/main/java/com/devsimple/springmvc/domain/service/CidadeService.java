@@ -4,6 +4,7 @@ import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Cidade;
 import com.devsimple.springmvc.domain.repository.CidadeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Service
 public class CidadeService {
 
+    @Autowired
     private CidadeRepository cidadeRepository;
 
     @Transactional
