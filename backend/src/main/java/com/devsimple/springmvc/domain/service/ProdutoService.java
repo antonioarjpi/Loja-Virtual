@@ -1,7 +1,6 @@
 package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.domain.exception.DomainException;
-import com.devsimple.springmvc.domain.model.Categoria;
 import com.devsimple.springmvc.domain.model.Produto;
 import com.devsimple.springmvc.domain.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
@@ -9,27 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-@Service
 @AllArgsConstructor
+@Service
 public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Produto create(Produto produto) {
-        try {
-            return this.produtoRepository.save(produto);
-        } catch(Exception e) {
-            System.out.println(e);
-            return null;
-        }
-    }
-
     @Transactional
     public Produto buscar(Long produtoId){
         return produtoRepository.findById(produtoId)
-                .orElseThrow(() -> new DomainException("Produto não encontrado"));
+                .orElseThrow(() -> new DomainException("Produto não encontrada"));
     }
 
     @Transactional
@@ -38,16 +27,13 @@ public class ProdutoService {
                 .stream()
                 .anyMatch(produtoExistente -> !produtoExistente.equals(produto));
         if (produtoEmUso){
-            throw new DomainException("Produto já cadastrado");
+            throw new DomainException("Produto já existente");
         }
-        Categoria categoria = new Categoria();
-        categoria.setId(categoria.getId());
-        categoria.setNome(categoria.getNome());
         return produtoRepository.save(produto);
     }
 
-    public void remover(Long produtoId) {
-        produtoRepository.deleteById(produtoId);
+    @Transactional
+    public void remover(Long produto){
+        produtoRepository.deleteById(produto);
     }
 }
-

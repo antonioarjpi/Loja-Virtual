@@ -3,7 +3,6 @@ package com.devsimple.springmvc.api.exceptionHandler;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
 import org.springframework.context.MessageSource;

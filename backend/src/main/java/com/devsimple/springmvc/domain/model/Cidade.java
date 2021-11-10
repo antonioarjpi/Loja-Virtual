@@ -1,7 +1,6 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.io.Serializable;

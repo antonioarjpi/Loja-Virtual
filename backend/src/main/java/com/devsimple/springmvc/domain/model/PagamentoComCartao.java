@@ -1,28 +1,27 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.devsimple.springmvc.domain.enums.EstadoPagamento;
-import javax.persistence.Table;
+import javax.persistence.Entity;
 
-
-@Table(name = "pagamento_com_cartao")
+@Entity
 public class PagamentoComCartao extends Pagamento {
     private static final long serialVersionUID = 1L;
 
-    private Long numerosParcelas;
+    private Integer numerosParcelas;
 
     public PagamentoComCartao() {
     }
 
-    public PagamentoComCartao(Long id, EstadoPagamento estado, Pedido pedido, Long numerosParcelas) {
+    public PagamentoComCartao(Long id, EstadoPagamento estado, Pedido pedido, Integer numerosParcelas) {
         super(id, estado, pedido);
         this.numerosParcelas = numerosParcelas;
     }
 
-    public Long getNumeroDeParcelas() {
+    public Integer getNumeroDeParcelas() {
         return numerosParcelas;
     }
 
-    public void setNumeroDeParcelas(Long numerosParcelas) {
+    public void setNumeroDeParcelas(Integer numerosParcelas) {
         this.numerosParcelas = numerosParcelas;
 
 

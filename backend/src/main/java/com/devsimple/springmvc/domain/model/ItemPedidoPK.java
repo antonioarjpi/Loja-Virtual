@@ -1,7 +1,6 @@
 package com.devsimple.springmvc.domain.model;
 
 import lombok.Data;
-
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

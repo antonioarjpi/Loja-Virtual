@@ -1,9 +1,10 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.devsimple.springmvc.domain.enums.EstadoPagamento;
+import javax.persistence.Entity;
 import java.util.Date;
 
-
+@Entity
 public class PagamentoComBoleto extends Pagamento{
     private static final long serialVersionUID = 1L;
 

@@ -4,12 +4,10 @@ import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Categoria;
 import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @AllArgsConstructor
 @Service

@@ -1,7 +1,6 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -15,13 +14,13 @@ public class ItemPedido implements Serializable {
     private ItemPedidoPK id = new ItemPedidoPK();
 
     private Double desconto;
-    private Long quantidade;
+    private Integer quantidade;
     private Double preco;
 
     public ItemPedido() {
     }
 
-    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Long quantidade, Double preco) {
+    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
         super();
         id.setPedido(pedido);
         id.setProduto(produto);
@@ -34,6 +33,7 @@ public class ItemPedido implements Serializable {
     public Pedido getPedido() {
         return id.getPedido();
     }
+
 
     public Produto getProduto() {
         return id.getProduto();
@@ -55,11 +55,11 @@ public class ItemPedido implements Serializable {
         this.desconto = desconto;
     }
 
-    public Long getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(Long quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 

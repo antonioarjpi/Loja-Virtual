@@ -1,15 +1,12 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class Categoria implements Serializable {
@@ -24,7 +21,7 @@ public class Categoria implements Serializable {
     private String nome;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "categoria")
+    @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
     public Categoria() {

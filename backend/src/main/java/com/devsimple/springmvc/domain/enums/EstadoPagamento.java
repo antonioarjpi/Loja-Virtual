@@ -1,6 +1,5 @@
 package com.devsimple.springmvc.domain.enums;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

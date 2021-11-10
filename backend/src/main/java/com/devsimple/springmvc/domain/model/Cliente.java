@@ -1,8 +1,7 @@
 package com.devsimple.springmvc.domain.model;
 
-import com.devsimple.springmvc.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class Cliente implements Serializable {
 
     private String cpfOuCnpj;
 
-    private Long tipo;
+    private Integer tipo;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
@@ -32,19 +31,20 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
     }
 
-    public Cliente(Long id, String nome, String email, String cpfOuCnpj, Long tipo) {
+    public Cliente(Long id, String nome, String email, String cpfOuCnpj, Integer tipo) {
         super();
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = tipo.getCod();
+        this.tipo = tipo;
     }
 
     public Long getId() {
@@ -79,12 +79,12 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
     }
 
-    public TipoCliente getTipo() {
-        return TipoCliente.toEnum(tipo);
+    public Integer getTipo() {
+        return tipo;
     }
 
-    public void setTipo(TipoCliente tipo) {
-        this.tipo = tipo.getCod();
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 
     public List<Endereco> getEnderecos() {

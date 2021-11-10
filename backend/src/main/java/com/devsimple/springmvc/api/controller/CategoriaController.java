@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/categorias")
 public class CategoriaController {
-
 
     private CategoriaRepository categoriaRepository;
     private CategoriaService categoriaService;
@@ -30,11 +28,6 @@ public class CategoriaController {
         Categoria obj = categoriaService.buscar(categoriaId);
         return ResponseEntity.ok().body(obj);
     }
-
-//    @GetMapping("/{categoriaId}")
-//    public Categoria buscarId(@PathVariable Long categoriaId){
-//        return categoriaService.buscar(categoriaId);
-//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
