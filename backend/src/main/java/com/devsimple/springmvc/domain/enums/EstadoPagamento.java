@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum EstadoPagamaneto {
+public enum EstadoPagamento {
 
     PENDENTE (1, "Pendente"),
     QUITADO (2, "Quitado"),
@@ -15,11 +15,11 @@ public enum EstadoPagamaneto {
     private int cod;
     private String descricao;
 
-    public static EstadoPagamaneto toEnum(Long cod){
+    public static EstadoPagamento toEnum(Long cod){
         if (cod==null){
             return null;
         }
-        for (EstadoPagamaneto x : EstadoPagamaneto.values()){
+        for (EstadoPagamento x : EstadoPagamento.values()){
             if ((cod.equals(x.getCod()))){
                 return x;
             }
