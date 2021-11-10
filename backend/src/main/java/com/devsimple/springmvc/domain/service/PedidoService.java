@@ -18,7 +18,7 @@ public class PedidoService {
     @Transactional
     public Pedido buscar(Long pedidoId){
         return pedidoRepository.findById(pedidoId)
-                .orElseThrow(() -> new DomainException("Pedido não encontrada"));
+                .orElseThrow(() -> new DomainException("Pedido não encontrado"));
     }
 
     @Transactional

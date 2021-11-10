@@ -1,7 +1,7 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.devsimple.springmvc.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ public class Pagamento implements Serializable {
     private Long id;
     private Integer estado;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name="pedido_id")
     @MapsId

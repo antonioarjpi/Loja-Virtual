@@ -18,7 +18,7 @@ public class ProdutoService {
     @Transactional
     public Produto buscar(Long produtoId){
         return produtoRepository.findById(produtoId)
-                .orElseThrow(() -> new DomainException("Produto não encontrada"));
+                .orElseThrow(() -> new DomainException("Produto não encontrado"));
     }
 
     @Transactional

@@ -1,6 +1,5 @@
 package com.devsimple.springmvc.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,7 +24,7 @@ public class Produto implements Serializable {
 
     private Double preco;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "produto_categoria",
     joinColumns = @JoinColumn(name = "produto_id"),

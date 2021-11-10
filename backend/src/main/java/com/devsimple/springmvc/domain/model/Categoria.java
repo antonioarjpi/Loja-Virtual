@@ -1,6 +1,5 @@
 package com.devsimple.springmvc.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,7 +19,6 @@ public class Categoria implements Serializable {
     @Size(max = 60)
     private String nome;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
