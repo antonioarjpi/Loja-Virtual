@@ -34,6 +34,12 @@ public class CategoriaService {
     }
 
     @Transactional
+    public Categoria atualizar(Categoria categoria){
+        buscar(categoria.getId());
+        return categoriaRepository.save(categoria);
+    }
+
+    @Transactional
     public void remover(Long categoria){
         categoriaRepository.deleteById(categoria);
     }

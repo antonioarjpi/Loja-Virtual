@@ -35,6 +35,14 @@ public class CategoriaController {
         return categoriaService.adicionar(categoria);
     }
 
+    @PutMapping("/{categoriasId}")
+    public ResponseEntity<Void> atualizar(@RequestBody Categoria categoria,
+                                          @PathVariable Long categoriaId){
+        categoria.setId(categoriaId);
+        categoria = categoriaService.atualizar(categoria);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{categoriaId}")
     public ResponseEntity<Void> deletar(@PathVariable Long categoriaId){
         if (!categoriaRepository.existsById(categoriaId)) {
