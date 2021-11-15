@@ -1,10 +1,12 @@
 package com.devsimple.springmvc.domain.service;
 
+import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Categoria;
 import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,11 @@ public class CategoriaService {
 
     @Transactional
     public void remover(Long categoria){
-        categoriaRepository.deleteById(categoria);
+        buscar(categoria);
+        try {
+            categoriaRepository.deleteById(categoria);
+        }catch (DataIntegrityViolationException e) {
+                throw new DataIntegrityException("Erro! Categoria possui produtos atrelados");
+        }
     }
 }
