@@ -10,6 +10,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @Service
@@ -17,6 +19,11 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+    @Transactional
+    public List<Categoria> listar(){
+        return categoriaRepository.findAll();
+    }
 
     @Transactional
     public Categoria buscar(Long categoriaId){

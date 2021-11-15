@@ -1,7 +1,7 @@
 package com.devsimple.springmvc.api.controller;
 
+import com.devsimple.springmvc.api.dto.CategoriaDTO;
 import com.devsimple.springmvc.domain.model.Categoria;
-import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import com.devsimple.springmvc.domain.service.CategoriaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,18 +9,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-    private CategoriaRepository categoriaRepository;
     private CategoriaService categoriaService;
 
+    @GetMapping("/produtos")
+    public List<Categoria> listarCategoriaComProduto(){
+        return categoriaService.listar();
+    }
+
     @GetMapping
-    public List<Categoria> listar(){
-        return categoriaRepository.findAll();
+    public ResponseEntity<List<CategoriaDTO>> listar(){
+        List<Categoria> lista = categoriaService.listar();
+        List<CategoriaDTO> listaDto = lista.stream()
+                .map(categoria -> new CategoriaDTO(categoria))
+                .collect((Collectors.toList()));
+        return ResponseEntity.ok().body(listaDto);
     }
 
     @GetMapping("/{categoriaId}")
@@ -45,9 +54,6 @@ public class CategoriaController {
 
     @DeleteMapping("/{categoriaId}")
     public ResponseEntity<Categoria> deletar(@PathVariable Long categoriaId){
-        if (!categoriaRepository.existsById(categoriaId)) {
-            return ResponseEntity.notFound().build();
-        }
         categoriaService.remover(categoriaId);
         return ResponseEntity.noContent().build();
     }
