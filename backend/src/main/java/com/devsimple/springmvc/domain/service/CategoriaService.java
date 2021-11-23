@@ -1,5 +1,6 @@
 package com.devsimple.springmvc.domain.service;
 
+import com.devsimple.springmvc.api.dto.CategoriaDTO;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Categoria;
@@ -64,5 +65,9 @@ public class CategoriaService {
     public Page<Categoria> buscarPagina(Integer page, Integer linesPerPages, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPages, Sort.Direction.valueOf(direction), orderBy);
         return categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria categoriaDto(CategoriaDTO categoriaDTO){
+        return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
     }
 }

@@ -37,9 +37,6 @@ public class ProdutoController {
 
     @DeleteMapping("/{produtoId}")
     public ResponseEntity<Void> deletar(@PathVariable Long produtoId){
-        if (!produtoRepository.existsById(produtoId)) {
-            return ResponseEntity.notFound().build();
-        }
         produtoService.remover(produtoId);
         return ResponseEntity.noContent().build();
     }

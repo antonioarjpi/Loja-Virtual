@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +44,24 @@ public class CategoriaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Categoria adicionar(@Valid @RequestBody Categoria categoria){
-        return categoriaService.adicionar(categoria);
+    public ResponseEntity<Void> adicionar(@Valid @RequestBody CategoriaDTO categoriaDTO){
+        Categoria obj = categoriaService.categoriaDto(categoriaDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(categoriaDTO.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Categoria adicionar(@Valid @RequestBody CategoriaDTO categoriaDTO){
+//        Categoria obj = categoriaService.categoriaDto(categoriaDTO);
+//        return categoriaService.adicionar(categoriaDTO);
+//    }
+
     @PutMapping("/{categoriaId}")
-    public ResponseEntity<Void> atualizar(@RequestBody Categoria categoria,
+    public ResponseEntity<Void> atualizar(@Valid @RequestBody CategoriaDTO categoriaDTO,
                                           @PathVariable Long categoriaId){
+        Categoria categoria = categoriaService.categoriaDto(categoriaDTO);
         categoria.setId(categoriaId);
         categoria = categoriaService.atualizar(categoria);
         return ResponseEntity.noContent().build();
