@@ -4,6 +4,7 @@ import com.devsimple.springmvc.api.dto.CategoriaDTO;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.DomainException;
 import com.devsimple.springmvc.domain.model.Categoria;
+import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,8 @@ public class CategoriaService {
 
     @Transactional
     public Categoria atualizar(Categoria categoria){
-        buscar(categoria.getId());
+        Categoria novaCategoria = buscar(categoria.getId());
+        atualizarCategoria(novaCategoria, categoria);
         return categoriaRepository.save(categoria);
     }
 
@@ -69,5 +71,9 @@ public class CategoriaService {
 
     public Categoria categoriaDto(CategoriaDTO categoriaDTO){
         return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+    }
+
+    private void atualizarCategoria(Categoria novaCategoria, Categoria categoria){
+        novaCategoria.setNome(categoria.getNome());
     }
 }
