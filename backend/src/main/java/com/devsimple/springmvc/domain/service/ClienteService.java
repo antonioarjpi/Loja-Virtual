@@ -4,11 +4,10 @@ import com.devsimple.springmvc.api.dto.ClienteDTO;
 import com.devsimple.springmvc.api.dto.ClienteNewDTO;
 import com.devsimple.springmvc.domain.enums.TipoCliente;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
-import com.devsimple.springmvc.domain.exception.DomainException;
+import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
 import com.devsimple.springmvc.domain.model.Cidade;
 import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.model.Endereco;
-import com.devsimple.springmvc.domain.repository.CidadeRepository;
 import com.devsimple.springmvc.domain.repository.ClienteRepository;
 import com.devsimple.springmvc.domain.repository.EnderecoRepository;
 import lombok.AllArgsConstructor;
@@ -39,7 +38,7 @@ public class ClienteService {
     @Transactional
     public Cliente buscar(Long clienteId){
         return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new DomainException("Cliente não encontrada"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Cliente não encontrada"));
     }
 
     @Transactional
@@ -81,7 +80,7 @@ public class ClienteService {
         try {
             clienteRepository.deleteById(cliente);
         }catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não pode excluir pois há pedidos para o cliente");
+            throw new DataIntegrityException("Erro! Cliente com pedidos!");
         }
     }
 

@@ -1,6 +1,6 @@
 package com.devsimple.springmvc.domain.service;
 
-import com.devsimple.springmvc.domain.exception.DomainException;
+import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
 import com.devsimple.springmvc.domain.model.Pedido;
 import com.devsimple.springmvc.domain.repository.PedidoRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class PedidoService {
     @Transactional
     public Pedido buscar(Long pedidoId){
         return pedidoRepository.findById(pedidoId)
-                .orElseThrow(() -> new DomainException("Pedido não encontrado"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Pedido não encontrado"));
     }
 
     @Transactional
@@ -27,7 +27,7 @@ public class PedidoService {
                 .stream()
                 .anyMatch(pedidoExistente -> !pedidoExistente.equals(pedido));
         if (pedidoEmUso){
-            throw new DomainException("Pedido já existente");
+            throw new EntidadeNaoEncontradaException("Pedido já existente");
         }
         return pedidoRepository.save(pedido);
     }

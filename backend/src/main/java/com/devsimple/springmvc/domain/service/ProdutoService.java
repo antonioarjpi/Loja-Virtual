@@ -1,6 +1,6 @@
 package com.devsimple.springmvc.domain.service;
 
-import com.devsimple.springmvc.domain.exception.DomainException;
+import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
 import com.devsimple.springmvc.domain.model.Produto;
 import com.devsimple.springmvc.domain.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class ProdutoService {
     @Transactional
     public Produto buscar(Long produtoId){
         return produtoRepository.findById(produtoId)
-                .orElseThrow(() -> new DomainException("Produto não encontrado"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Produto não encontrado"));
     }
 
     @Transactional
@@ -27,7 +27,7 @@ public class ProdutoService {
                 .stream()
                 .anyMatch(produtoExistente -> !produtoExistente.equals(produto));
         if (produtoEmUso){
-            throw new DomainException("Produto já existente");
+            throw new EntidadeNaoEncontradaException("Produto já existente");
         }
         return produtoRepository.save(produto);
     }

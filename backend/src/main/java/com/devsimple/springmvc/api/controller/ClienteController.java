@@ -6,7 +6,6 @@ import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.service.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -42,12 +41,6 @@ public class ClienteController {
         Cliente obj = clienteService.buscar(clienteId);
         return ResponseEntity.ok().body(obj);
     }
-
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Cliente adicionar(@Valid @RequestBody Cliente cliente){
-//        return clienteService.adicionar(cliente);
-//    }
 
     @RequestMapping(method=RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {

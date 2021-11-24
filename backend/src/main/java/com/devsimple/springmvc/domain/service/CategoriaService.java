@@ -2,9 +2,8 @@ package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.api.dto.CategoriaDTO;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
-import com.devsimple.springmvc.domain.exception.DomainException;
+import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
 import com.devsimple.springmvc.domain.model.Categoria;
-import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.repository.CategoriaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 
 @AllArgsConstructor
 @Service
@@ -33,7 +30,7 @@ public class CategoriaService {
     @Transactional
     public Categoria buscar(Long categoriaId){
         return categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new DomainException("Categoria não encontrada"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Categoria não encontrada"));
     }
 
     @Transactional
