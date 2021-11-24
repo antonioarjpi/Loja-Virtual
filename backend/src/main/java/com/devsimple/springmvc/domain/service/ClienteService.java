@@ -1,10 +1,16 @@
 package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.api.dto.ClienteDTO;
+import com.devsimple.springmvc.api.dto.ClienteNewDTO;
+import com.devsimple.springmvc.domain.enums.TipoCliente;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.DomainException;
+import com.devsimple.springmvc.domain.model.Cidade;
 import com.devsimple.springmvc.domain.model.Cliente;
+import com.devsimple.springmvc.domain.model.Endereco;
+import com.devsimple.springmvc.domain.repository.CidadeRepository;
 import com.devsimple.springmvc.domain.repository.ClienteRepository;
+import com.devsimple.springmvc.domain.repository.EnderecoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +28,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
     @Transactional
     public List<Cliente> listar(){
         return clienteRepository.findAll();
@@ -35,13 +44,10 @@ public class ClienteService {
 
     @Transactional
     public Cliente adicionar(Cliente cliente){
-        boolean clienteEmUso = clienteRepository.findByNome(cliente.getNome())
-                .stream()
-                .anyMatch(clienteExistente -> !clienteExistente.equals(cliente));
-        if (clienteEmUso){
-            throw new DomainException("Cliente já existente");
-        }
-        return clienteRepository.save(cliente);
+        cliente.setId(null);
+        cliente = clienteRepository.save(cliente);
+        enderecoRepository.saveAll(cliente.getEnderecos());
+        return cliente;
     }
 
     @Transactional
@@ -49,6 +55,24 @@ public class ClienteService {
         Cliente novoCliente = buscar(cliente.getId());
         atualizarCliente(novoCliente, cliente);
         return clienteRepository.save(novoCliente);
+    }
+
+    @Transactional
+    public Cliente adicionarDTO(ClienteNewDTO clienteNewDTO) {
+        Cliente cliente = new Cliente(null, clienteNewDTO.getNome(), clienteNewDTO.getEmail(), clienteNewDTO.getCpfOuCnpj(),
+                TipoCliente.toEnum(clienteNewDTO.getTipo()));
+        Cidade cidade = new Cidade(clienteNewDTO.getCidadeId(), null, null);
+        Endereco endereco = new Endereco(null, clienteNewDTO.getLogradouro(), clienteNewDTO.getNumero(), clienteNewDTO.getComplemento(),
+                clienteNewDTO.getBairro(), clienteNewDTO.getCep(), cliente, cidade);
+        cliente.getEnderecos().add(endereco);
+        cliente.getTelefones().add(clienteNewDTO.getTelefone1());
+        if (clienteNewDTO.getTelefone2() != null) {
+            cliente.getTelefones().add(clienteNewDTO.getTelefone2());
+        }
+        if (clienteNewDTO.getTelefone3() != null) {
+            cliente.getTelefones().add(clienteNewDTO.getTelefone3());
+        }
+        return cliente;
     }
 
     @Transactional

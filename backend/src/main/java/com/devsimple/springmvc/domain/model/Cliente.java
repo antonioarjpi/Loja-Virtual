@@ -1,5 +1,6 @@
 package com.devsimple.springmvc.domain.model;
 
+import com.devsimple.springmvc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -45,14 +46,16 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nome, String email, String cpfOuCnpj, Integer tipo) {
+    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
         super();
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = tipo;
+        this.tipo = (tipo==null) ? null : tipo.getCod();
     }
+
+
 
     public Long getId() {
         return id;

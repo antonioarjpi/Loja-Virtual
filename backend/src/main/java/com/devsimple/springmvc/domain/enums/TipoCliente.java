@@ -12,7 +12,7 @@ public enum TipoCliente {
     private int cod;
     private String descricao;
 
-    public static TipoCliente toEnum(Long cod){
+    public static TipoCliente toEnum(Integer cod){
         if (cod==null){
             return null;
         }

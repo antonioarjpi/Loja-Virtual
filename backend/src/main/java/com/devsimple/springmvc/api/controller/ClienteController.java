@@ -1,6 +1,7 @@
 package com.devsimple.springmvc.api.controller;
 
 import com.devsimple.springmvc.api.dto.ClienteDTO;
+import com.devsimple.springmvc.api.dto.ClienteNewDTO;
 import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.service.ClienteService;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,10 +43,19 @@ public class ClienteController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Cliente adicionar(@Valid @RequestBody Cliente cliente){
-        return clienteService.adicionar(cliente);
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Cliente adicionar(@Valid @RequestBody Cliente cliente){
+//        return clienteService.adicionar(cliente);
+//    }
+
+    @RequestMapping(method=RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
+        Cliente cliente = clienteService.adicionarDTO(clienteNewDTO);
+        cliente = clienteService.adicionar(cliente);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(cliente.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{clienteId}")

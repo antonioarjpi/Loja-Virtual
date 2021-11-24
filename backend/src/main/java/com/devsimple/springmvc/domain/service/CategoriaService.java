@@ -38,12 +38,6 @@ public class CategoriaService {
 
     @Transactional
     public Categoria adicionar(Categoria categoria){
-        boolean categoriaEmUso = categoriaRepository.findByNome(categoria.getNome())
-                .stream()
-                .anyMatch(categoriaExistente -> !categoriaExistente.equals(categoria));
-        if (categoriaEmUso){
-            throw new DomainException("Categoria já existente");
-        }
         return categoriaRepository.save(categoria);
     }
 
