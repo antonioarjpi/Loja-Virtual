@@ -2,6 +2,9 @@ package com.devsimple.springmvc.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,7 +18,13 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Preenchimento obrigatório!")
+    @Size(min = 5, max=120, message = "O tamanho deve ser entre 5 e 120 caracteres!")
     private String nome;
+
+    @NotBlank(message = "Preenchimento obrigatório")
+    @Email(message = "E-mail está inválido")
     private String email;
 
     private String cpfOuCnpj;

@@ -33,6 +33,12 @@ public class ProdutoService {
     }
 
     @Transactional
+    public Produto atualizar(Produto produto){
+        buscar(produto.getId());
+        return produtoRepository.save(produto);
+    }
+
+    @Transactional
     public void remover(Long produto){
         produtoRepository.deleteById(produto);
     }
