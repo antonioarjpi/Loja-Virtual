@@ -1,6 +1,7 @@
 package com.devsimple.springmvc.domain.model;
 
 import com.devsimple.springmvc.domain.enums.TipoCliente;
+import com.devsimple.springmvc.domain.service.validations.ClienteInsert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Email;

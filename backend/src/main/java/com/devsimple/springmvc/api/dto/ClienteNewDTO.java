@@ -1,11 +1,11 @@
 package com.devsimple.springmvc.api.dto;
 
+import com.devsimple.springmvc.domain.service.validations.ClienteInsert;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import java.io.Serializable;
 
-@Data
 @AllArgsConstructor
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
