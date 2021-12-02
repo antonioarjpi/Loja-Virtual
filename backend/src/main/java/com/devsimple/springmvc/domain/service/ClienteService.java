@@ -38,7 +38,7 @@ public class ClienteService {
     @Transactional
     public Cliente buscar(Long clienteId){
         return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Cliente não encontrada"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Cliente não encontrado"));
     }
 
     @Transactional

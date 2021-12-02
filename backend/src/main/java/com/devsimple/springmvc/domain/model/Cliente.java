@@ -25,6 +25,7 @@ public class Cliente implements Serializable {
     @Size(min = 5, max=120, message = "O tamanho deve ser entre 5 e 120 caracteres!")
     private String nome;
 
+    @Column(unique = true)
     @NotBlank(message = "Preenchimento obrigatório")
     @Email(message = "E-mail está inválido")
     private String email;
