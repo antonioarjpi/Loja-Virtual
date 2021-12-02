@@ -1,13 +1,14 @@
 package com.devsimple.springmvc.api.dto;
 
 import com.devsimple.springmvc.domain.model.Cliente;
+import com.devsimple.springmvc.domain.service.validations.ClienteUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
