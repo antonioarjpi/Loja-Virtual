@@ -34,6 +34,9 @@ public class PedidoService {
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     @Transactional
     public Pedido buscar(Long pedidoId){
         return pedidoRepository.findById(pedidoId)
@@ -44,20 +47,23 @@ public class PedidoService {
     public Pedido adicionar(Pedido pedido){
         pedido.setId(null);
         pedido.setInstante(new Date());
+        pedido.setCliente(clienteService.buscar(pedido.getCliente().getId()));
         pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
         pedido.getPagamento().setPedido(pedido);
-        if (pedido.getPagamento() instanceof PagamentoComBoleto){
-            PagamentoComBoleto pagamentoComBoleto = (PagamentoComBoleto) pedido.getPagamento();
-            boletoService.preencherPagamentoComBoleto(pagamentoComBoleto, pedido.getInstante());
+        if (pedido.getPagamento() instanceof PagamentoComBoleto) {
+            PagamentoComBoleto pagto = (PagamentoComBoleto) pedido.getPagamento();
+            boletoService.preencherPagamentoComBoleto(pagto, pedido.getInstante());
         }
         pedido = pedidoRepository.save(pedido);
         pagamentoRepository.save(pedido.getPagamento());
-        for (ItemPedido itemPedido : pedido.getItens()){
-            itemPedido.setDesconto(0.0);
-            itemPedido.setPreco(produtoService.buscar(itemPedido.getProduto().getId()).getPreco());
-            itemPedido.setPedido(pedido);
+        for (ItemPedido ip : pedido.getItens()) {
+            ip.setDesconto(0.0);
+            ip.setProduto(produtoService.buscar(ip.getProduto().getId()));
+            ip.setPreco(ip.getProduto().getPreco());
+            ip.setPedido(pedido);
         }
         itemPedidoRepository.saveAll(pedido.getItens());
+
         return pedido;
     }
 
