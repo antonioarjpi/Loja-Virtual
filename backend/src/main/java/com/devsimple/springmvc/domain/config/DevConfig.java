@@ -3,6 +3,7 @@ package com.devsimple.springmvc.domain.config;
 import com.devsimple.springmvc.domain.service.DatabaseService;
 import com.devsimple.springmvc.domain.service.EmailService;
 import com.devsimple.springmvc.domain.service.MockEmailService;
+import com.devsimple.springmvc.domain.service.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,7 @@ public class DevConfig {
 
     @Bean
     public EmailService emailService(){
-        return new MockEmailService();
+        return new SmtpEmailService();
     }
 
 }
