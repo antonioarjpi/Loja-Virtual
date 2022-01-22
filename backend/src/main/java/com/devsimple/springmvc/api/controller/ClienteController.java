@@ -42,7 +42,7 @@ public class ClienteController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(method=RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
         Cliente cliente = clienteService.adicionarDTO(clienteNewDTO);
         cliente = clienteService.adicionar(cliente);

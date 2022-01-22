@@ -2,6 +2,7 @@ package com.devsimple.springmvc.domain.model;
 
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -13,8 +14,11 @@ public class Cidade implements Serializable {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull
     private String nome;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private Estado estado;
