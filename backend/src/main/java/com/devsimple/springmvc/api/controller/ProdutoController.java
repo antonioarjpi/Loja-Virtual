@@ -1,9 +1,7 @@
 package com.devsimple.springmvc.api.controller;
 
-import com.devsimple.springmvc.api.dto.CategoriaDTO;
 import com.devsimple.springmvc.api.dto.ProdutoDTO;
 import com.devsimple.springmvc.api.utils.URL;
-import com.devsimple.springmvc.domain.model.Categoria;
 import com.devsimple.springmvc.domain.model.Produto;
 import com.devsimple.springmvc.domain.repository.ProdutoRepository;
 import com.devsimple.springmvc.domain.service.ProdutoService;
