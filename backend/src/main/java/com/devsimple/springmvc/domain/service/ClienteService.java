@@ -16,6 +16,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ClienteService {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -59,7 +63,7 @@ public class ClienteService {
     @Transactional
     public Cliente adicionarDTO(ClienteNewDTO clienteNewDTO) {
         Cliente cliente = new Cliente(null, clienteNewDTO.getNome(), clienteNewDTO.getEmail(), clienteNewDTO.getCpfOuCnpj(),
-                TipoCliente.toEnum(clienteNewDTO.getTipo()));
+                TipoCliente.toEnum(clienteNewDTO.getTipo()), bCryptPasswordEncoder.encode(clienteNewDTO.getSenha()));
         Cidade cidade = new Cidade(clienteNewDTO.getCidadeId(), null, null);
         Endereco endereco = new Endereco(null, clienteNewDTO.getLogradouro(), clienteNewDTO.getNumero(), clienteNewDTO.getComplemento(),
                 clienteNewDTO.getBairro(), clienteNewDTO.getCep(), cliente, cidade);
@@ -90,7 +94,7 @@ public class ClienteService {
     }
 
     public Cliente clienteDto(ClienteDTO clienteDTO){
-        return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null, null);
+        return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null, null, null);
     }
 
     private void atualizarCliente(Cliente novoCliente, Cliente cliente){

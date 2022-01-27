@@ -1,9 +1,11 @@
 package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.domain.enums.EstadoPagamento;
+import com.devsimple.springmvc.domain.enums.TipoCliente;
 import com.devsimple.springmvc.domain.model.*;
 import com.devsimple.springmvc.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -12,6 +14,9 @@ import java.util.Arrays;
 
 @Service
 public class DatabaseService {
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     @Autowired
     private CategoriaRepository categoriaRepository;
@@ -94,7 +99,7 @@ public class DatabaseService {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "antonioarjpi@gmail.com", "36378912377", null);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "antonioarjpi@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123456"));
 
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 

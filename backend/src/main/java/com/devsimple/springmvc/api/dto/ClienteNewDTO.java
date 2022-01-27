@@ -2,6 +2,8 @@ package com.devsimple.springmvc.api.dto;
 
 import com.devsimple.springmvc.domain.service.validations.ClienteInsert;
 import lombok.AllArgsConstructor;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @AllArgsConstructor
@@ -9,16 +11,31 @@ import java.io.Serializable;
 public class ClienteNewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String nome;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String email;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String cpfOuCnpj;
     private Integer tipo;
 
+    @NotEmpty(message = "Preenchimento obrigatório")
+    private String senha;
     private String logradouro;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String numero;
     private String complemento;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String bairro;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String cep;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String telefone1;
     private String telefone2;
     private String telefone3;
@@ -131,4 +148,11 @@ public class ClienteNewDTO implements Serializable {
         this.cidadeId = cidadeId;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 }
