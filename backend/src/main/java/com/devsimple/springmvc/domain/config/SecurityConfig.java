@@ -1,6 +1,7 @@
 package com.devsimple.springmvc.domain.config;
 
 import com.devsimple.springmvc.domain.security.JWTAuthenticationFilter;
+import com.devsimple.springmvc.domain.security.JWTAuthorizationFilter;
 import com.devsimple.springmvc.domain.security.JWTutil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
