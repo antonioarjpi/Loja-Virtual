@@ -7,6 +7,7 @@ import com.devsimple.springmvc.domain.service.ClienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,6 +28,8 @@ public class ClienteController {
         return clienteService.listar();
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> listar(){
         List<Cliente> lista = clienteService.listar();
@@ -36,6 +39,7 @@ public class ClienteController {
         return ResponseEntity.ok().body(listaDto);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{clienteId}")
     public ResponseEntity<?> listarPorCliente(@PathVariable Long clienteId){
         Cliente obj = clienteService.buscar(clienteId);
@@ -59,12 +63,14 @@ public class ClienteController {
         return clienteService.atualizar(cliente);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{clienteId}")
     public ResponseEntity<Cliente> deletar(@PathVariable Long clienteId){
         clienteService.remover(clienteId);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<Page<ClienteDTO>> listarPorPagina(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

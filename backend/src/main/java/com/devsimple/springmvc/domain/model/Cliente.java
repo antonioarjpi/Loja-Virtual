@@ -68,8 +68,6 @@ public class Cliente implements Serializable {
         addPerfil(Perfil.CLIENTE);
     }
 
-
-
     public Long getId() {
         return id;
     }

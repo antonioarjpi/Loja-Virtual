@@ -2,6 +2,7 @@ package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.api.dto.ClienteDTO;
 import com.devsimple.springmvc.api.dto.ClienteNewDTO;
+import com.devsimple.springmvc.domain.enums.Perfil;
 import com.devsimple.springmvc.domain.enums.TipoCliente;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
