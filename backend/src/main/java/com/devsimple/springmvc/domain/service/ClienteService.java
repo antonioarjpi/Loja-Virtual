@@ -11,12 +11,14 @@ import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.model.Endereco;
 import com.devsimple.springmvc.domain.repository.ClienteRepository;
 import com.devsimple.springmvc.domain.repository.EnderecoRepository;
+import com.devsimple.springmvc.domain.security.UserSS;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,11 @@ public class ClienteService {
 
     @Transactional
     public Cliente buscar(Long clienteId){
+
+        UserSS user = UserService.authenticated();
+        if (user== null || !user.hasRole(Perfil.ADMIN) && !clienteId.equals(user.getId())){
+            throw new AuthorizationServiceException("Acesso negado");}
+
         return clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Cliente não encontrado"));
     }
