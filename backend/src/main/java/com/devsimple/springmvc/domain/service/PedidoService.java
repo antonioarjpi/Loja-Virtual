@@ -1,15 +1,19 @@
 package com.devsimple.springmvc.domain.service;
 
 import com.devsimple.springmvc.domain.enums.EstadoPagamento;
+import com.devsimple.springmvc.domain.exception.AuthorizationException;
 import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
-import com.devsimple.springmvc.domain.model.ItemPedido;
-import com.devsimple.springmvc.domain.model.PagamentoComBoleto;
-import com.devsimple.springmvc.domain.model.Pedido;
+import com.devsimple.springmvc.domain.model.*;
+import com.devsimple.springmvc.domain.repository.ClienteRepository;
 import com.devsimple.springmvc.domain.repository.ItemPedidoRepository;
 import com.devsimple.springmvc.domain.repository.PagamentoRepository;
 import com.devsimple.springmvc.domain.repository.PedidoRepository;
+import com.devsimple.springmvc.domain.security.UserSS;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +43,9 @@ public class PedidoService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @Transactional
     public Pedido buscar(Long pedidoId){
@@ -74,5 +81,16 @@ public class PedidoService {
     @Transactional
     public void remover(Long pedido){
         pedidoRepository.deleteById(pedido);
+    }
+
+    public Page<Pedido> buscarPagina(Integer page, Integer linesPerPages, String orderBy, String direction) {
+        UserSS user = UserService.authenticated();
+        if (user == null) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPages, Sort.Direction.valueOf(direction), orderBy);
+        Cliente cliente = clienteService.buscar(user.getId());
+        return pedidoRepository.findByCliente(cliente, pageRequest);
     }
 }
