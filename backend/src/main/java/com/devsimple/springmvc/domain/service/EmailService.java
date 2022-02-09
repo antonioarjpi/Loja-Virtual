@@ -1,5 +1,6 @@
 package com.devsimple.springmvc.domain.service;
 
+import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.model.Pedido;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -15,4 +16,6 @@ public interface EmailService {
     void enviarEmailConfirmacaoHtml(Pedido pedido);
 
     void enviarEmailHtml(MimeMessage msg);
+
+    void esqueciSenha(Cliente cliente, String novaSenha);
 }
