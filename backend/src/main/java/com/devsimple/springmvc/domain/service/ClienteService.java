@@ -4,6 +4,7 @@ import com.devsimple.springmvc.api.dto.ClienteDTO;
 import com.devsimple.springmvc.api.dto.ClienteNewDTO;
 import com.devsimple.springmvc.domain.enums.Perfil;
 import com.devsimple.springmvc.domain.enums.TipoCliente;
+import com.devsimple.springmvc.domain.exception.AuthorizationException;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
 import com.devsimple.springmvc.domain.model.Cidade;
@@ -22,6 +23,10 @@ import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -36,6 +41,12 @@ public class ClienteService {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private S3Service s3Service;
+
+    @Autowired
+    private ImageService imageService;
 
     @Transactional
     public List<Cliente> listar(){
@@ -109,4 +120,9 @@ public class ClienteService {
         novoCliente.setNome(cliente.getNome());
         novoCliente.setEmail(cliente.getEmail());
     }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+        return s3Service.uploadFile(multipartFile);
+    }
 }
+
