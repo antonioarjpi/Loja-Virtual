@@ -19,6 +19,11 @@ public class CidadeService {
         return cidadeRepository.findAll();
     }
 
+    public List<Cidade> listarPeloEstado(Integer estadoId){
+        return cidadeRepository.findCidades(estadoId);
+    }
+
+
     public Cidade adicionar(Cidade cidade){
         return cidadeRepository.save(cidade);
     }
