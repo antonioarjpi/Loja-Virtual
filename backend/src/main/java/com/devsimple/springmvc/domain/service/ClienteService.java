@@ -7,13 +7,13 @@ import com.devsimple.springmvc.domain.enums.TipoCliente;
 import com.devsimple.springmvc.domain.exception.AuthorizationException;
 import com.devsimple.springmvc.domain.exception.DataIntegrityException;
 import com.devsimple.springmvc.domain.exception.EntidadeNaoEncontradaException;
+import com.devsimple.springmvc.domain.exception.ObjectNotFoundException;
 import com.devsimple.springmvc.domain.model.Cidade;
 import com.devsimple.springmvc.domain.model.Cliente;
 import com.devsimple.springmvc.domain.model.Endereco;
 import com.devsimple.springmvc.domain.repository.ClienteRepository;
 import com.devsimple.springmvc.domain.repository.EnderecoRepository;
 import com.devsimple.springmvc.domain.security.UserSS;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -68,6 +68,21 @@ public class ClienteService {
 
         return clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Cliente não encontrado"));
+    }
+
+    @Transactional
+    public Cliente buscarEmail(String email){
+        UserSS user = UserService.authenticated();
+        if (user== null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())){
+            throw new AuthorizationServiceException("Acesso negado");
+        }
+
+        Cliente cliente = clienteRepository.findByEmail(email);
+        if (cliente == null){
+            throw new ObjectNotFoundException("Objeto não encontrado! id: "+ user.getId()
+                    +", Tipo: "+ Cliente.class.getName());
+        }
+        return cliente;
     }
 
     @Transactional

@@ -43,12 +43,18 @@ public class ClienteController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{clienteId}")
     public ResponseEntity<?> listarPorCliente(@PathVariable Long clienteId){
-        Cliente obj = clienteService.buscar(clienteId);
-        return ResponseEntity.ok().body(obj);
+        Cliente cliente = clienteService.buscar(clienteId);
+        return ResponseEntity.ok().body(cliente);
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<Cliente> buscaPorEmail(@RequestParam(value = "value") String email){
+        Cliente cliente = clienteService.buscarEmail(email);
+        return ResponseEntity.ok().body(cliente);
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
+    public ResponseEntity<Void> adicionar(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
         Cliente cliente = clienteService.adicionarDTO(clienteNewDTO);
         cliente = clienteService.adicionar(cliente);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
