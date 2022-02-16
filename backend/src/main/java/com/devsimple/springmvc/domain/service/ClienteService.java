@@ -15,6 +15,7 @@ import com.devsimple.springmvc.domain.repository.EnderecoRepository;
 import com.devsimple.springmvc.domain.security.UserSS;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,6 @@ import java.net.URI;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ClienteService {
 
     @Autowired
@@ -47,6 +47,12 @@ public class ClienteService {
 
     @Autowired
     private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
+
+    @Value("${img.profile.size}")
+    private Integer size;
 
     @Transactional
     public List<Cliente> listar(){
@@ -126,12 +132,14 @@ public class ClienteService {
         if (user == null){
             throw new AuthorizationException("Acesso negado");
         }
-        URI uri = s3Service.uploadFile(multipartFile);
-        Cliente cliente = buscar(user.getId());
-        cliente.setImageUrl(uri.toString());
-        clienteRepository.save(cliente);
 
-        return uri;
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        jpgImage = imageService.cropSquare(jpgImage);
+        jpgImage = imageService.resize(jpgImage, size);
+        String filename = prefix + user.getId() + ".jpg";
+
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), filename, "image");
     }
+
 }
 
