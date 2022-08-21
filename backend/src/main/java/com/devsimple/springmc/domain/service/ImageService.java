@@ -1,7 +1,6 @@
 package com.devsimple.springmc.domain.service;
 
 import com.devsimple.springmc.domain.exception.FileException;
-
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
@@ -56,8 +55,8 @@ public class ImageService {
         int min = (sourceImg.getHeight() <= sourceImg.getWidth()) ? sourceImg.getHeight() : sourceImg.getWidth();
         return Scalr.crop(
                 sourceImg,
-                (sourceImg.getWidth()/2) - (min/2),
-                (sourceImg.getHeight()/2) - (min/2),
+                (sourceImg.getWidth() / 2) - (min / 2),
+                (sourceImg.getHeight() / 2) - (min / 2),
                 min,
                 min);
     }

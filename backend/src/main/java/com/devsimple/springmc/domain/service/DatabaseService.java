@@ -5,8 +5,6 @@ import com.devsimple.springmc.domain.enums.Perfil;
 import com.devsimple.springmc.domain.enums.TipoCliente;
 import com.devsimple.springmc.domain.model.*;
 import com.devsimple.springmc.domain.repository.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,27 +15,32 @@ import java.util.Arrays;
 @Service
 public class DatabaseService {
 
-    @Autowired
     private BCryptPasswordEncoder pe;
-
-    @Autowired
     private CategoriaRepository categoriaRepository;
-    @Autowired
     private ProdutoRepository produtoRepository;
-    @Autowired
     private EstadoRepository estadoRepository;
-    @Autowired
     private CidadeRepository cidadeRepository;
-    @Autowired
     private ClienteRepository clienteRepository;
-    @Autowired
     private EnderecoRepository enderecoRepository;
-    @Autowired
     private PedidoRepository pedidoRepository;
-    @Autowired
     private PagamentoRepository pagamentoRepository;
-    @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+
+    public DatabaseService(BCryptPasswordEncoder pe, CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository,
+                           EstadoRepository estadoRepository, CidadeRepository cidadeRepository, ClienteRepository clienteRepository,
+                           EnderecoRepository enderecoRepository, PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository,
+                           ItemPedidoRepository itemPedidoRepository) {
+        this.pe = pe;
+        this.categoriaRepository = categoriaRepository;
+        this.produtoRepository = produtoRepository;
+        this.estadoRepository = estadoRepository;
+        this.cidadeRepository = cidadeRepository;
+        this.clienteRepository = clienteRepository;
+        this.enderecoRepository = enderecoRepository;
+        this.pedidoRepository = pedidoRepository;
+        this.pagamentoRepository = pagamentoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
+    }
 
     public void instanciaTestDatabase() throws ParseException {
         Categoria cat1 = new Categoria(null, "Informática");

@@ -1,5 +1,8 @@
 package com.devsimple.springmc.domain.config;
 
+import com.devsimple.springmc.domain.security.JWTAuthenticationFilter;
+import com.devsimple.springmc.domain.security.JWTAuthorizationFilter;
+import com.devsimple.springmc.domain.security.JWTutil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +21,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.devsimple.springmc.domain.security.JWTAuthenticationFilter;
-import com.devsimple.springmc.domain.security.JWTAuthorizationFilter;
-import com.devsimple.springmc.domain.security.JWTutil;
-
 import java.util.Arrays;
 
 @Configuration
@@ -29,29 +28,24 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JWTutil jwtUtil;
-
-    @Autowired
-    private Environment environment;
-
     private static final String[] PUBLIC_MATCHERS = {
             "/h2-console/**"
 
     };
-
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/produtos/**",
             "/categorias/**"
     };
-
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/clientes/**",
             "/auth/forgot**"
     };
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JWTutil jwtUtil;
+    @Autowired
+    private Environment environment;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -78,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
@@ -92,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

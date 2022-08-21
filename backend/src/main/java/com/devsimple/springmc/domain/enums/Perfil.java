@@ -13,14 +13,6 @@ public enum Perfil {
         this.descricao = descricao;
     }
 
-    public int getCod() {
-        return cod;
-    }
-
-    public String getDescricao () {
-        return descricao;
-    }
-
     public static Perfil toEnum(Integer cod) {
 
         if (cod == null) {
@@ -34,6 +26,14 @@ public enum Perfil {
         }
 
         throw new IllegalArgumentException("Id inválido: " + cod);
+    }
+
+    public int getCod() {
+        return cod;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
 }

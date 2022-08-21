@@ -1,10 +1,10 @@
 package com.devsimple.springmc.domain.model;
 
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
 
 @Entity
 public class Cidade implements Serializable {

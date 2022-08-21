@@ -1,6 +1,7 @@
 package com.devsimple.springmc.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -15,21 +16,21 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
     @ManyToOne
-    @JoinColumn(name="cliente_id")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name="endereco_de_entrega_id")
+    @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
     @OneToMany(mappedBy = "id.pedido")
@@ -46,9 +47,9 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    public double getValorTotal(){
+    public double getValorTotal() {
         double soma = 0.0;
-        for (ItemPedido itemPedido : itens){
+        for (ItemPedido itemPedido : itens) {
             soma += itemPedido.getSubtotal();
         }
         return soma;
@@ -103,7 +104,6 @@ public class Pedido implements Serializable {
     }
 
 
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -114,18 +114,13 @@ public class Pedido implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         Pedido other = (Pedido) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
+            if (other.id != null) return false;
+        } else if (!id.equals(other.id)) return false;
         return true;
     }
 

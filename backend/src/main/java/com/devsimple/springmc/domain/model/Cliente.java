@@ -24,7 +24,7 @@ public class Cliente implements Serializable {
     private Long id;
 
     @NotBlank(message = "Preenchimento obrigatório!")
-    @Size(min = 5, max=120, message = "O tamanho deve ser entre 5 e 120 caracteres!")
+    @Size(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres!")
     private String nome;
 
     @Column(unique = true)
@@ -43,7 +43,7 @@ public class Cliente implements Serializable {
     private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="PERFIS")
+    @CollectionTable(name = "PERFIS")
     private Set<Integer> perfis = new HashSet<>();
 
     @ElementCollection
@@ -64,7 +64,7 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
-        this.tipo = (tipo==null) ? null : tipo.getCod();
+        this.tipo = (tipo == null) ? null : tipo.getCod();
         this.senha = senha;
         addPerfil(Perfil.CLIENTE);
     }
@@ -129,16 +129,16 @@ public class Cliente implements Serializable {
         return telefones;
     }
 
-    public Set<Perfil> getPerfis(){
+    public void setTelefones(Set<String> telefones) {
+        this.telefones = telefones;
+    }
+
+    public Set<Perfil> getPerfis() {
         return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void addPerfil(Perfil perfil){
+    public void addPerfil(Perfil perfil) {
         perfis.add(perfil.getCod());
-    }
-
-    public void setTelefones(Set<String> telefones) {
-        this.telefones = telefones;
     }
 
     public List<Pedido> getPedidos() {

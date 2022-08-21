@@ -13,7 +13,7 @@ public class EstadoDTO implements Serializable {
     public EstadoDTO() {
     }
 
-    public EstadoDTO(Estado estado){
+    public EstadoDTO(Estado estado) {
         id = estado.getId();
         nome = estado.getNome();
     }

@@ -34,7 +34,7 @@ public class SwaggerConfig {
 
 
     @Bean
-    public Docket api(){
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET, Arrays.asList(m403, m404, m500))

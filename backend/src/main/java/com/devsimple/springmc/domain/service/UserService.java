@@ -1,7 +1,7 @@
 package com.devsimple.springmc.domain.service;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.devsimple.springmc.domain.security.UserSS;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class UserService {
 

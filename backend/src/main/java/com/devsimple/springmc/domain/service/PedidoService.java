@@ -1,61 +1,56 @@
 package com.devsimple.springmc.domain.service;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.devsimple.springmc.domain.enums.EstadoPagamento;
+import com.devsimple.springmc.domain.exception.AuthorizationException;
+import com.devsimple.springmc.domain.exception.ObjectNotFoundException;
+import com.devsimple.springmc.domain.model.Cliente;
+import com.devsimple.springmc.domain.model.ItemPedido;
+import com.devsimple.springmc.domain.model.PagamentoComBoleto;
+import com.devsimple.springmc.domain.model.Pedido;
+import com.devsimple.springmc.domain.repository.ItemPedidoRepository;
+import com.devsimple.springmc.domain.repository.PagamentoRepository;
+import com.devsimple.springmc.domain.repository.PedidoRepository;
+import com.devsimple.springmc.domain.security.UserSS;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devsimple.springmc.domain.enums.EstadoPagamento;
-import com.devsimple.springmc.domain.exception.AuthorizationException;
-import com.devsimple.springmc.domain.exception.ObjectNotFoundException;
-import com.devsimple.springmc.domain.model.*;
-import com.devsimple.springmc.domain.repository.ClienteRepository;
-import com.devsimple.springmc.domain.repository.ItemPedidoRepository;
-import com.devsimple.springmc.domain.repository.PagamentoRepository;
-import com.devsimple.springmc.domain.repository.PedidoRepository;
-import com.devsimple.springmc.domain.security.UserSS;
-
 import java.util.Date;
 
-@AllArgsConstructor
+
 @Service
 public class PedidoService {
 
-    @Autowired
     private PedidoRepository pedidoRepository;
-
-    @Autowired
     private BoletoService boletoService;
-
-    @Autowired
     private PagamentoRepository pagamentoRepository;
-
-    @Autowired
     private ProdutoService produtoService;
-
-    @Autowired
     private ItemPedidoRepository itemPedidoRepository;
-
-    @Autowired
     private ClienteService clienteService;
-
-    @Autowired
     private EmailService emailService;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    public PedidoService(PedidoRepository pedidoRepository, BoletoService boletoService, PagamentoRepository pagamentoRepository,
+                         ProdutoService produtoService, ItemPedidoRepository itemPedidoRepository, ClienteService clienteService,
+                         EmailService emailService) {
+        this.pedidoRepository = pedidoRepository;
+        this.boletoService = boletoService;
+        this.pagamentoRepository = pagamentoRepository;
+        this.produtoService = produtoService;
+        this.itemPedidoRepository = itemPedidoRepository;
+        this.clienteService = clienteService;
+        this.emailService = emailService;
+    }
 
     @Transactional
-    public Pedido buscar(Long pedidoId){
+    public Pedido buscar(Long pedidoId) {
         return pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new ObjectNotFoundException("Pedido não encontrado"));
     }
 
     @Transactional
-    public Pedido adicionar(Pedido pedido){
+    public Pedido adicionar(Pedido pedido) {
         pedido.setId(null);
         pedido.setInstante(new Date());
         pedido.setCliente(clienteService.buscar(pedido.getCliente().getId()));
@@ -80,7 +75,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public void remover(Long pedido){
+    public void remover(Long pedido) {
         pedidoRepository.deleteById(pedido);
     }
 

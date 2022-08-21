@@ -1,7 +1,6 @@
 package com.devsimple.springmc.domain.security;
 
 import com.devsimple.springmc.domain.enums.Perfil;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

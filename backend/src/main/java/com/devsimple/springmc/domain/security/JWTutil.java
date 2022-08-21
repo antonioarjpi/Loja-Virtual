@@ -1,10 +1,10 @@
 package com.devsimple.springmc.domain.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import io.jsonwebtoken.Jwts;
 
 import java.util.Date;
 
@@ -25,13 +25,13 @@ public class JWTutil {
                 .compact();
     }
 
-    public boolean tokenValido(String token){
+    public boolean tokenValido(String token) {
         Claims claims = getClaims(token);
-        if (claims != null){
+        if (claims != null) {
             String username = claims.getSubject();
             Date expirationDate = claims.getExpiration();
             Date agora = new Date(System.currentTimeMillis());
-            if (username != null && expirationDate != null && agora.before(expirationDate)){
+            if (username != null && expirationDate != null && agora.before(expirationDate)) {
                 return true;
             }
         }
@@ -47,11 +47,10 @@ public class JWTutil {
     }
 
 
-
     private Claims getClaims(String token) {
         try {
             return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

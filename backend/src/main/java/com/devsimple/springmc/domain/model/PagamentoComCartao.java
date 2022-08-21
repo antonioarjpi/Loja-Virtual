@@ -1,7 +1,6 @@
 package com.devsimple.springmc.domain.model;
 
 import com.devsimple.springmc.domain.enums.EstadoPagamento;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;

@@ -22,7 +22,7 @@ public class DevConfig {
     private String strategy;
 
     @Bean
-    public boolean instanciaDatabase() throws ParseException{
+    public boolean instanciaDatabase() throws ParseException {
         if (!"create".equals(strategy)) {
             return false;
         }
@@ -32,7 +32,7 @@ public class DevConfig {
     }
 
     @Bean
-    public EmailService emailService(){
+    public EmailService emailService() {
         return new SmtpEmailService();
     }
 
